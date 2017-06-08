@@ -1,0 +1,9 @@
+{
+  "name": "api-family",
+  "version": "0.0.1",
+  "description": "API Family",
+  "main": "index.js",
+  "repository": "https://github.com/antoine-aumjaud/api-family",
+  "author": "Antoine Aumjaud",
+  "license": "MIT"
+}
