@@ -2,8 +2,15 @@
   "name": "api-family",
   "version": "0.0.1",
   "description": "API Family",
-  "main": "index.js",
-  "repository": "https://github.com/antoine-aumjaud/api-family",
+  "license": "MIT",
+  
   "author": "Antoine Aumjaud",
-  "license": "MIT"
+  
+  "scripts": { "start" : "node src/main/server.js" },
+  "main": "src/main/index.js",
+  "repository": "https://github.com/antoine-aumjaud/api-family",
+
+  "dependencies": {
+    "express": "^4.15.3"
+  }
 }
