@@ -1,15 +1,19 @@
-const APP_NAME = "api-family";
-const APP_VERSION = "0.0.1";
+"use strict";
 
-let config = require('./conf/api-family.json');
+const APP_NAME = "api-family";
+const APP_VERSION = "0.0.2";
+
+const config = require('./conf/api-family.json');
+const data = require('./data.js');
 
 const express = require('express');
+const bodyParser = require('body-parser');
 const app = express()
 
 /*
  * SECURITY
  */
-const requireAuthentication = function (req, res, next) {
+const requireAuthentication = function (req, res, next) {    
     if(req.header("secure-key") && req.header("secure-key") === config.secureKey) {
         next();
     }
@@ -29,18 +33,17 @@ app
 
 .all('/secure/*', requireAuthentication)
 
-.post('/secure/size/:name', (req, res) => {
-    const name = req.params.name;
+.use(bodyParser.json())
 
+.post('/secure/size', (req, res) => {
+    res.status(data.add('size', req.body) ? 200 : 500).end();
+})
+.post('/secure/weight', (req, res) => {
+    res.status(data.add('weight', req.body) ? 200 : 500).end();
 })  
-.post('/secure/weight/:name', (req, res) => {
-    const name = req.params.name;
-
-})  
-.post('/secure/shoes-size/:name', (req, res) => {
-    const name = req.params.name;
-
-})  
+.post('/secure/shoes-size', (req, res) => {
+    res.status(data.add('shoes-size', req.body) ? 200 : 500).end();
+})
 
 .listen(9080);
 console.log('Familly-API started on server 9080');

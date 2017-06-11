@@ -9,5 +9,6 @@ ADD src/main .
 
 VOLUME ./conf
 VOLUME ./logs
+VOLUME ./data
 
 CMD node server.js > logs/api-family.txt

@@ -3,14 +3,15 @@
   "version": "0.0.1",
   "description": "API Family",
   "license": "MIT",
-  
   "author": "Antoine Aumjaud",
-  
-  "scripts": { "start" : "node src/main/server.js" },
+  "scripts": {
+    "start": "node src/main/server.js"
+  },
   "main": "src/main/index.js",
   "repository": "https://github.com/antoine-aumjaud/api-family",
-
   "dependencies": {
-    "express": "^4.15.3"
+    "body-parser": "^1.17.2",
+    "express": "^4.15.3",
+    "fs": "^0.0.1-security"
   }
 }
