@@ -37,6 +37,7 @@ app
 
 .use(bodyParser.json())
 
+//Reset cache
 .get('/secure/resetCache', (req, res) => {
     dataService.resetCache() 
     res.status(200).end();
