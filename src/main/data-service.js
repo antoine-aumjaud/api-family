@@ -1,15 +1,16 @@
 "use strict";
 
 const FILE_NAME = 'data/family.json';
-
 const fs = require('fs');
-fs.readFile(FILE_NAME, 'utf8', (err, data) => {
-  if (err || !data) dataJson = {};
-  else dataJson = JSON.parse(data);
-  console.log(`File ${FILE_NAME} loaded`);
-});
-
 let dataJson;
+const _loadFile = () => {
+    fs.readFile(FILE_NAME, 'utf8', (err, data) => {
+        if (err || !data) dataJson = {};
+        else dataJson = JSON.parse(data);
+        console.log(`File ${FILE_NAME} loaded`);
+    });
+};
+_loadFile();
 
 //add data 
 exports.add = (firstname, type, message) => {
@@ -23,9 +24,13 @@ exports.add = (firstname, type, message) => {
         if(err) throw new Error("Can't save file: " + err); //Stop the program
         console.log(`Data ${firstname}.${type} added in data file`);
     });
-}
+};
 
 //get data
 exports.get = () => {
     return dataJson; 
-}
+};
+
+//reload file from disk
+exports.resetCache = _loadFile;
+

@@ -37,6 +37,11 @@ app
 
 .use(bodyParser.json())
 
+.get('/secure/resetCache', (req, res) => {
+    dataService.resetCache() 
+    res.status(200).end();
+})
+
 //Category API
 .post('/secure/size', (req, res) => {
     addData('size', req.body);
