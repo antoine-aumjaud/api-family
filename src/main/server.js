@@ -39,13 +39,16 @@ app
 
 //Category API
 .post('/secure/size', (req, res) => {
-    res.status(addData('size', req.body) ? 200 : 500).end();
+    addData('size', req.body);
+    res.status(200).end();
 })
 .post('/secure/weight', (req, res) => {
-    res.status(addData('weight', req.body) ? 200 : 500).end();
+    addData('weight', req.body);
+    res.status(200).end();
 })  
 .post('/secure/shoes-size', (req, res) => {
-    res.status(addData('shoes-size', req.body) ? 200 : 500).end();
+    addData('shoes-size', req.body);
+    res.status(200).end();
 })
 .get('/secure/size', (req, res) => {
     res.json(getData('size'));
