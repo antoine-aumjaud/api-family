@@ -67,10 +67,12 @@ app
 
 //Member API
 .get('/secure/members', (req, res) => {
-    res.json(dataService.get());
+    const data = req.query.filter === 'last' ? dataService.getLast() : dataService.get();
+    res.json(data);
 })
 .get('/secure/member/:member', (req, res) => {
-    const memberData = dataService.get()[req.params.member];
+    const data = req.query.filter === 'last' ? dataService.getLast() : dataService.get();
+    const memberData = data[req.params.member];
     if(memberData) { 
         res.json(memberData); 
         return; 
@@ -78,7 +80,8 @@ app
     res.status(404).end();
 })
 .get('/secure/member/:member/:type', (req, res) => {
-    const memberData = dataService.get()[req.params.member];
+    const data = req.query.filter === 'last' ? dataService.getLast() : dataService.get();
+    const memberData = data[req.params.member];
     if(memberData) {
         const typeOfMemberData = memberData[req.params.type];
         if(typeOfMemberData) {
@@ -88,6 +91,7 @@ app
     }
     res.status(404).end();
 })
+
 
 .listen(9080);
 console.log('Familly-API started on server 9080');
@@ -109,7 +113,7 @@ const getData = (type) => {
      const ret = {};
      for(let member in members) {
         ret[member] = {};
-        if(members[member][type]) ret[member][type] = members[member][type]
+        if(members[member][type]) ret[member][type] = members[member][type];
      }
     return ret;
 };

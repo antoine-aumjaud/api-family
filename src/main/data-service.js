@@ -30,6 +30,16 @@ exports.add = (firstname, type, message) => {
 exports.get = () => {
     return dataJson; 
 };
+exports.getLast = () => {
+    const ret = {};
+    for(let member in dataJson) {
+        ret[member] = {};
+        for(let type in dataJson[member]) {
+            ret[member][type] = dataJson[member][type][dataJson[member][type].length-1];
+        }
+    }
+    return ret;
+};
 
 //reload file from disk
 exports.resetCache = _loadFile;
