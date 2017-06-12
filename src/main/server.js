@@ -13,7 +13,7 @@ const app = express()
 /*
  * SECURITY
  */
-const requireAuthentication = function (req, res, next) {    
+const requireAuthentication = (req, res, next) => {    
     if(req.header("secure-key") && req.header("secure-key") === config.secureKey) {
         next();
     }
@@ -36,16 +36,48 @@ app
 .use(bodyParser.json())
 
 .post('/secure/size', (req, res) => {
-    res.status(dataService.add('size', req.body) ? 200 : 500).end();
+    res.status(addData('size', req.body) ? 200 : 500).end();
 })
 .post('/secure/weight', (req, res) => {
-    res.status(dataService.add('weight', req.body) ? 200 : 500).end();
+    res.status(addData('weight', req.body) ? 200 : 500).end();
 })  
 .post('/secure/shoes-size', (req, res) => {
-    res.status(dataService.add('shoes-size', req.body) ? 200 : 500).end();
+    res.status(addData('shoes-size', req.body) ? 200 : 500).end();
+})
+.get('/secure/get/all', (req, res) => {
+    res.json(dataService.get());
+})
+.get('/secure/get/:username', (req, res) => {
+    const userData = dataService.get()[req.params.username];
+    if(userData) { 
+        res.json(userData); 
+        return; 
+    }
+    res.status(404).end();
+})
+.get('/secure/get/:username/:type', (req, res) => {
+    const userData = dataService.get()[req.params.username];
+    if(userData) {
+        const typeData = userData[req.params.type];
+        if(typeData) {
+            res.json(typeData);
+            return;
+        }
+    }
+    res.status(404).end();
 })
 
 .listen(9080);
 console.log('Familly-API started on server 9080');
 
-
+/*
+ * PRIVATE
+ */
+const addData = (type, message) => {
+    //prepare message
+    const firstname = message.firstname;
+    delete message.firstname;
+    message.date = Date.now();
+    //call service
+    return dataService.add(firstname, type, message);
+} 

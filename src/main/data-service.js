@@ -12,12 +12,7 @@ fs.readFile(FILE_NAME, 'utf8', (err, data) => {
 let dataJson;
 
 //add data 
-exports.add = function (type, message) {
-    //prepare message
-    const firstname = message.firstname;
-    delete message.firstname;
-    message.date = Date.now();
-    
+exports.add = (firstname, type, message) => {
     //prepare target object
     if(!dataJson[firstname])       dataJson[firstname] = {};
     if(!dataJson[firstname][type]) dataJson[firstname][type] = [];
@@ -31,6 +26,6 @@ exports.add = function (type, message) {
 }
 
 //get data
-exports.get = function () {
+exports.get = () => {
     return dataJson; 
 }
