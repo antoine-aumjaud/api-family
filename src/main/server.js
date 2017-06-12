@@ -1,10 +1,10 @@
 "use strict";
 
 const APP_NAME = "api-family";
-const APP_VERSION = "0.0.2";
+const APP_VERSION = "1.0.0";
 
 const config = require('./conf/api-family.json');
-const data = require('./data.js');
+const data = require('./data-service.js');
 
 const express = require('express');
 const bodyParser = require('body-parser');
