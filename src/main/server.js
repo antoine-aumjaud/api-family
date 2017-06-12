@@ -110,11 +110,11 @@ const addData = (type, message) => {
 }; 
 
 const getData = (type) => {
-     const members = dataService.get();
-     const ret = {};
-     for(let member in members) {
+    const members = dataService.get();
+    const ret = {};
+    for(let member in members) {
         ret[member] = {};
         if(members[member][type]) ret[member][type] = members[member][type];
-     }
+    }
     return ret;
 };
