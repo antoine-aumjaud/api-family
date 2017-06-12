@@ -14,10 +14,12 @@ const app = express()
  * SECURITY
  */
 const requireAuthentication = (req, res, next) => {    
-    if(req.header("secure-key") && req.header("secure-key") === config.secureKey) {
+    if(req.header("secure-key") === config.secureKey
+    || req.query["secure-key"] === config.secureKey) {
         next();
     }
     else {
+        console.log("SECURITY: error on access to this resource")
         res.status(401).send('Not authorized');
     }
 };
@@ -35,6 +37,7 @@ app
 
 .use(bodyParser.json())
 
+//Category API
 .post('/secure/size', (req, res) => {
     res.status(addData('size', req.body) ? 200 : 500).end();
 })
@@ -44,23 +47,34 @@ app
 .post('/secure/shoes-size', (req, res) => {
     res.status(addData('shoes-size', req.body) ? 200 : 500).end();
 })
-.get('/secure/get/all', (req, res) => {
+.get('/secure/size', (req, res) => {
+    res.json(getData('size'));
+})
+.get('/secure/weight', (req, res) => {
+    res.json(getData('weight'));
+})
+.get('/secure/shoes-size', (req, res) => {
+    res.json(getData('size'));
+})
+
+//Member API
+.get('/secure/members', (req, res) => {
     res.json(dataService.get());
 })
-.get('/secure/get/:username', (req, res) => {
-    const userData = dataService.get()[req.params.username];
-    if(userData) { 
-        res.json(userData); 
+.get('/secure/member/:member', (req, res) => {
+    const memberData = dataService.get()[req.params.member];
+    if(memberData) { 
+        res.json(memberData); 
         return; 
     }
     res.status(404).end();
 })
-.get('/secure/get/:username/:type', (req, res) => {
-    const userData = dataService.get()[req.params.username];
-    if(userData) {
-        const typeData = userData[req.params.type];
-        if(typeData) {
-            res.json(typeData);
+.get('/secure/member/:member/:type', (req, res) => {
+    const memberData = dataService.get()[req.params.member];
+    if(memberData) {
+        const typeOfMemberData = memberData[req.params.type];
+        if(typeOfMemberData) {
+            res.json(typeOfMemberData);
             return;
         }
     }
@@ -80,4 +94,14 @@ const addData = (type, message) => {
     message.date = Date.now();
     //call service
     return dataService.add(firstname, type, message);
-} 
+}; 
+
+const getData = (type) => {
+     const members = dataService.get();
+     const ret = {};
+     for(let member in members) {
+        ret[member] = {};
+        if(members[member][type]) ret[member][type] = members[member][type]
+     }
+    return ret;
+};

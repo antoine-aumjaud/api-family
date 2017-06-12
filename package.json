@@ -5,7 +5,9 @@
   "license": "MIT",
   "author": "Antoine Aumjaud",
   "scripts": {
-    "start": "node src/main/server.js"
+    "start": "node src/main/server.js",
+    "start-mon": "nodemon src/main/server.js",
+    "debug": "node --inspect src/main/server.js"
   },
   "main": "src/main/index.js",
   "repository": "https://github.com/antoine-aumjaud/api-family",
