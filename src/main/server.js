@@ -40,7 +40,7 @@ app
 //Reset cache
 .get('/secure/resetCache', (req, res) => {
     dataService.resetCache() 
-    res.status(200).end();
+    res.status(200).send("done");
 })
 
 //Category API
@@ -57,22 +57,25 @@ app
     res.status(200).end();
 })
 .get('/secure/size', (req, res) => {
-    res.json(getData('size'));
+    res.json(getDataByType('size', req.query.filter));
 })
 .get('/secure/weight', (req, res) => {
-    res.json(getData('weight'));
+    res.json(getDataByType('weight', req.query.filter));
 })
 .get('/secure/shoes-size', (req, res) => {
-    res.json(getData('size'));
+    res.json(getDataByType('shoes-size', req.query.filter));
 })
 
 //Member API
 .get('/secure/members', (req, res) => {
-    const data = req.query.filter === 'last' ? dataService.getLast() : dataService.get();
-    res.json(data);
+    const data = getData(req.query.filter);
+    res.format({
+        text:    () => res.send(formatMarkdown(data)),
+        default: () => res.json(data)
+    });
 })
 .get('/secure/member/:member', (req, res) => {
-    const data = req.query.filter === 'last' ? dataService.getLast() : dataService.get();
+    const data = getData(req.query.filter);
     const memberData = data[req.params.member];
     if(memberData) { 
         res.json(memberData); 
@@ -81,7 +84,7 @@ app
     res.status(404).end();
 })
 .get('/secure/member/:member/:type', (req, res) => {
-    const data = req.query.filter === 'last' ? dataService.getLast() : dataService.get();
+    const data = getData(req.query.filter);
     const memberData = data[req.params.member];
     if(memberData) {
         const typeOfMemberData = memberData[req.params.type];
@@ -92,7 +95,6 @@ app
     }
     res.status(404).end();
 })
-
 
 .listen(9080);
 console.log('Familly-API started on server 9080');
@@ -108,13 +110,27 @@ const addData = (type, message) => {
     //call service
     return dataService.add(firstname, type, message);
 }; 
-
-const getData = (type) => {
-    const members = dataService.get();
+const getData = (filter) => {
+    return filter === 'last' ? dataService.getLast() : dataService.get();
+};
+const getDataByType = (type, filter) => {
+    const members = getData(filter);
     const ret = {};
     for(let member in members) {
         ret[member] = {};
         if(members[member][type]) ret[member][type] = members[member][type];
     }
     return ret;
+};
+const formatMarkdown = (data) => {
+    let array = '| Nom | Taille (m) | Poids (kg) | Chaussure |\n'
+                + '|---|---:|---:|---:|\n';
+    for(let member in data) {
+        array += '| ' + member 
+            + ' | ' + (data[member].size          ? data[member].size.m    + '.' + data[member].size.cm   : '') 
+            + ' | ' + (data[member].weight        ? data[member].weight.kg + '.' + data[member].weight.g  : '') 
+            + ' | ' + (data[member]['shoes-size'] ? data[member]['shoes-size'].number : '') 
+            + ' |\n';
+    }
+    return array;
 };
