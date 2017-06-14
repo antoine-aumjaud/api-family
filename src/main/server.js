@@ -1,147 +1,15 @@
 "use strict";
 
-const APP_NAME = "api-family";
-const APP_VERSION = "1.0.0";
-
-const config = require('./conf/api-family.json');
-const dataService = require('./data-service.js');
-
-const express = require('express');
+const express    = require('express');
 const bodyParser = require('body-parser');
-const app = express()
 
-/*
- * SECURITY
- */
-const requireAuthentication = (req, res, next) => {    
-    if(req.header("secure-key") === config.secureKey
-    || req.query["secure-key"] === config.secureKey) {
-        next();
-    }
-    else {
-        console.log("SECURITY: error on access to this resource")
-        res.status(401).send('Not authorized');
-    }
-};
+const technicalResource = require('./requesthandler/technical-resource');
+const familyResource    = require('./requesthandler/family-resource');
 
-/*
- * ROUTES
- */
-app
-.get('/hi',   (req, res) => res.send("hello"))
-.get('/info', (req, res) => {
-    res.json( { "name": APP_NAME, "version": APP_VERSION } );
-})
-
-.all('/secure/*', requireAuthentication)
-
+express()
+.use('/', technicalResource)
+.use('/secure', familyResource)
 .use(bodyParser.json())
-
-//Reset cache
-.get('/secure/resetCache', (req, res) => {
-    dataService.resetCache() 
-    res.status(200).send("done");
-})
-
-//Category API
-.post('/secure/size', (req, res) => {
-    addData('size', req.body);
-    res.status(200).end();
-})
-.post('/secure/weight', (req, res) => {
-    addData('weight', req.body);
-    res.status(200).end();
-})  
-.post('/secure/shoes-size', (req, res) => {
-    addData('shoes-size', req.body);
-    res.status(200).end();
-})
-.get('/secure/size', (req, res) => {
-    res.json(getDataByType('size', req.query.filter));
-})
-.get('/secure/weight', (req, res) => {
-    res.json(getDataByType('weight', req.query.filter));
-})
-.get('/secure/shoes-size', (req, res) => {
-    res.json(getDataByType('shoes-size', req.query.filter));
-})
-
-//Member API
-.get('/secure/members', (req, res) => {
-    const data = getData(req.query.filter);
-    res.format({
-        text:    () => res.send(formatMarkdownList(dataService.getLast())),
-        default: () => res.json(getData(req.query.filter))
-    });
-})
-.get('/secure/member/:member', (req, res) => {
-    const data = getData(req.query.filter);
-    const memberData = data[req.params.member];
-    if(memberData) { 
-        res.json(memberData); 
-        return; 
-    }
-    res.status(404).end();
-})
-.get('/secure/member/:member/:type', (req, res) => {
-    const data = getData(req.query.filter);
-    const memberData = data[req.params.member];
-    if(memberData) {
-        const typeOfMemberData = memberData[req.params.type];
-        if(typeOfMemberData) {
-            res.json(typeOfMemberData);
-            return;
-        }
-    }
-    res.status(404).end();
-})
-
 .listen(9080);
 console.log('Familly-API started on server 9080');
 
-/*
- * PRIVATE
- */
-const addData = (type, message) => {
-    //prepare message
-    const firstname = message.firstname;
-    delete message.firstname;
-    message.date = Date.now();
-    //call service
-    return dataService.add(firstname, type, message);
-}; 
-const getData = (filter) => {
-    return filter === 'last' ? dataService.getLast() : dataService.get();
-};
-const getDataByType = (type, filter) => {
-    const members = getData(filter);
-    const ret = {};
-    for(let member in members) {
-        ret[member] = {};
-        if(members[member][type]) ret[member][type] = members[member][type];
-    }
-    return ret;
-};
-const formatMarkdownArray = (data) => {
-    let array = '| Nom | Taille (m) | Poids (kg) | Chaussure |\n'
-                + '|---|---:|---:|---:|\n';
-    for(let member in data) {
-        array += '| ' + member 
-            + ' | ' + (data[member].size          ? data[member].size.m    + '.' + data[member].size.cm   : '') 
-            + ' | ' + (data[member].weight        ? data[member].weight.kg + '.' + data[member].weight.g  : '') 
-            + ' | ' + (data[member]['shoes-size'] ? data[member]['shoes-size'].number : '') 
-            + ' |\n';
-    }
-    return array;
-};
-const formatMarkdownList = (data) => {
-    let list = "";
-    for(let member in data) {
-        list += '*' + member + '* : '
-            + (data[member].size          ? '\n* mesure ' + data[member].size.m    + '.' + data[member].size.cm  + 'm' : '') 
-            + (data[member].weight        ? '\n* pèse '   + data[member].weight.kg + '.' + data[member].weight.g + 'kg' : '') 
-            + (data[member]['shoes-size'] ? '\n* fait '   + data[member]['shoes-size'].number + ' de pointure' : '') 
-            + '\n\n';
-    }
-    return list;
-};

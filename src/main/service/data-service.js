@@ -1,7 +1,9 @@
 "use strict";
 
-const FILE_NAME = 'data/family.json';
 const fs = require('fs');
+
+const FILE_NAME = 'data/family.json';
+
 let dataJson;
 const _loadFile = () => {
     fs.readFile(FILE_NAME, 'utf8', (err, data) => {
