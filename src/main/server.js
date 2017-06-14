@@ -70,8 +70,8 @@ app
 .get('/secure/members', (req, res) => {
     const data = getData(req.query.filter);
     res.format({
-        text:    () => res.send(formatMarkdown(data)),
-        default: () => res.json(data)
+        text:    () => res.send(formatMarkdownList(dataService.getLast())),
+        default: () => res.json(getData(req.query.filter))
     });
 })
 .get('/secure/member/:member', (req, res) => {
@@ -122,7 +122,7 @@ const getDataByType = (type, filter) => {
     }
     return ret;
 };
-const formatMarkdown = (data) => {
+const formatMarkdownArray = (data) => {
     let array = '| Nom | Taille (m) | Poids (kg) | Chaussure |\n'
                 + '|---|---:|---:|---:|\n';
     for(let member in data) {
@@ -133,4 +133,15 @@ const formatMarkdown = (data) => {
             + ' |\n';
     }
     return array;
+};
+const formatMarkdownList = (data) => {
+    let list = "";
+    for(let member in data) {
+        list += '*' + member + '* : '
+            + (data[member].size          ? '\n* mesure ' + data[member].size.m    + '.' + data[member].size.cm  + 'm' : '') 
+            + (data[member].weight        ? '\n* pèse '   + data[member].weight.kg + '.' + data[member].weight.g + 'kg' : '') 
+            + (data[member]['shoes-size'] ? '\n* fait '   + data[member]['shoes-size'].number + ' de pointure' : '') 
+            + '\n\n';
+    }
+    return list;
 };
