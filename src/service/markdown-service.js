@@ -4,12 +4,8 @@
 exports.formatDataAsArray = (data) => {
     let array = '| Nom | Taille (m) | Poids (kg) | Chaussure |\n'
                 + '|---|---:|---:|---:|\n';
-    for(let member in data) {
-        array += '| ' + member 
-            + ' | ' + (data[member].size          ? data[member].size.m    + '.' + parseInt(data[member].size.cm)   : '') 
-            + ' | ' + (data[member].weight        ? data[member].weight.kg + '.' + parseInt(data[member].weight.g)  : '') 
-            + ' | ' + (data[member]['shoes-size'] ? data[member]['shoes-size'].number : '') 
-            + ' |\n';
+    for(let memberName in data) {
+        array += '| ' + memberName + ' | ' + formatSize(data[memberName]) + ' | ' + formatWeight(data[memberName]) + ' | ' + formatShoesSize(data[memberName]) + ' |\n';
     }
     return array;
 };
@@ -17,12 +13,28 @@ exports.formatDataAsArray = (data) => {
 // data to Markdown list
 exports.formatDataAsList = (data) => {
     let list = "";
-    for(let member in data) {
-        list += '*' + member + '* : '
-            + (data[member].size          ? '\n- mesure ' + data[member].size.m    + '.' + parseInt(data[member].size.cm)  + ' m' : '') 
-            + (data[member].weight        ? '\n- pèse '   + data[member].weight.kg + '.' + parseInt(data[member].weight.g) + ' kg' : '') 
-            + (data[member]['shoes-size'] ? '\n- fait '   + data[member]['shoes-size'].number + ' de pointure' : '') 
+    for(let memberName in data) {
+        list += '*' + memberName + '* :'
+            + (data[memberName].size          ? '\n- mesure '  + formatSize(data[memberName])   + ' m'  : '') 
+            + (data[memberName].weight        ? '\n- pèse '    + formatWeight(data[memberName]) + ' kg' :  '')
+            + (data[memberName]['shoes-size'] ? '\n- fait du ' + formatShoesSize(data[memberName])     : '') 
             + '\n\n';
     }
     return list;
+};
+
+const formatSize = (member) => {
+    if(member.size)
+        return member.size.m  + (member.size.cm  ? '.' + parseInt(member.size.cm) : '');
+    return '';
+};
+const formatWeight = (member) => {
+    if(member.weight)
+        return member.weight.kg  + (member.weight.g  ? '.' + parseInt(member.weight.g) : '');
+    return '';
+};
+const formatShoesSize = (member) => {
+    if(member['shoes-size'])
+        return member['shoes-size'].number;
+    return '';
 };
