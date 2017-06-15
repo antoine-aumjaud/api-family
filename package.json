@@ -5,15 +5,19 @@
   "license": "MIT",
   "author": "Antoine Aumjaud",
   "scripts": {
-    "start": "node src/main/server.js",
-    "start-mon": "nodemon src/main/server.js",
-    "debug": "node --inspect src/main/server.js"
+    "debug": "node --inspect src/server.js",
+    "start": "node src/server.js",
+    "start-mon": "nodemon src/server.js",
+    "test": "jasmine --config=test/jasmine.json"
   },
-  "main": "src/main/index.js",
+  "main": "src/server.js",
   "repository": "https://github.com/antoine-aumjaud/api-family",
   "dependencies": {
     "body-parser": "^1.17.2",
     "express": "^4.15.3",
     "fs": "^0.0.1-security"
+  },
+  "devDependencies": {
+    "jasmine": "^2.6.0"
   }
 }
