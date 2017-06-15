@@ -15,10 +15,10 @@ exports.formatDataAsList = (data) => {
     let list = "";
     for(let memberName in data) {
         list += '*' + memberName + '* :'
-            + (data[memberName].size          ? '\n- mesure '  + formatSize(data[memberName])   + ' m'  : '') 
-            + (data[memberName].weight        ? '\n- pèse '    + formatWeight(data[memberName]) + ' kg' :  '')
-            + (data[memberName]['shoes-size'] ? '\n- fait du ' + formatShoesSize(data[memberName])     : '') 
-            + '\n\n';
+            + (data[memberName].size          ? '\n - mesure '  + formatSize(data[memberName])   + ' m'  : '') 
+            + (data[memberName].weight        ? '\n - pèse '    + formatWeight(data[memberName]) + ' kg' :  '')
+            + (data[memberName]['shoes-size'] ? '\n - fait du ' + formatShoesSize(data[memberName])      : '') 
+            + '\n\n ';
     }
     return list;
 };
