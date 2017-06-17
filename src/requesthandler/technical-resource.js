@@ -3,14 +3,12 @@
 const express = require('express');
 
 const config = require('../conf/api-family.json');
-
-const APP_NAME    = "api-family";
-const APP_VERSION = "1.0.0";
+const commonConfig = require('../conf-common.json');
 
 module.exports = express.Router()
 
 .get('/hi',   (req, res) => res.send("hello"))
-.get('/info', (req, res) => res.json( { "name": APP_NAME, "version": APP_VERSION } ))
+.get('/info', (req, res) => res.json( { "name": commonConfig.application_name, "version": commonConfig.application_version, "buildDate": commonConfig.build_date } ))
 
 .all('/secure/*', (req, res, next) => {    
     if(req.header("secure-key") === config.secureKey
