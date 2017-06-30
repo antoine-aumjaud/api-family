@@ -30,6 +30,11 @@ module.exports = {
     "shoes-size": {
         "number": 10,
         "date": 1497281048191
-    }
+    },
+    "size": {
+        "m": 1,
+        "cm": 7,
+        "date": 1497281097282
+    },
   }
 }

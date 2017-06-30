@@ -24,8 +24,16 @@ exports.formatDataAsList = (data) => {
 };
 
 const formatSize = (member) => {
-    if(member.size)
-        return member.size.m  + (member.size.cm  ? '.' + parseInt(member.size.cm) : '');
+    if(member.size) {
+        if(member.size.cm) {
+            let cm = parseInt(member.size.cm); 
+            if(cm < 10)
+                return member.size.m + '.0' + member.size.cm 
+            else 
+                return member.size.m + '.' + member.size.cm 
+        }  
+        else return member.size.m;
+    }
     return '';
 };
 const formatWeight = (member) => {

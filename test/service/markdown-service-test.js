@@ -16,7 +16,7 @@ describe("Markdown Services tests", function() {
             + "|---|---:|---:|---:|\n"
             + "| antoine | 1.76 | 72.20 | 42 |\n"
             + "| camille |  | 73 | 37 |\n"
-            + "| kyllian |  |  | 10 |\n");
+            + "| kyllian | 1.07 |  | 10 |\n");
     });
 
     it("should return a valid markdown list", function() {
@@ -36,6 +36,7 @@ describe("Markdown Services tests", function() {
            + " - pèse 73 kg\n"
            + " - fait du 37\n\n "
            + "*kyllian* :\n"
+           + " - mesure 1.07 m\n"
            + " - fait du 10\n\n ");
     });
 });
