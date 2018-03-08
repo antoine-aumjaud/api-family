@@ -6,10 +6,10 @@
   "author": "Antoine Aumjaud",
   "scripts": {
     "build-config": "./build-config.sh",
-    "debug":     "npm run build-config && node --inspect src/server.js",
-    "start":     "npm run build-config && node    src/server.js",
-    "start-mon": "npm run build-config && nodemon src/server.js",
-    "test":      "npm run build-config && jasmine --config=test/jasmine.json"
+    "debug": "npm run build-config && cd src && node --inspect server.js",
+    "start": "npm run build-config && cd src && node server.js",
+    "start-mon": "npm run build-config  && cd src && nodemon server.js",
+    "test": "npm run build-config && jasmine --config=test/jasmine.json"
   },
   "main": "src/server.js",
   "repository": "https://github.com/antoine-aumjaud/api-family",
