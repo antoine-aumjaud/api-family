@@ -16,7 +16,7 @@
   "dependencies": {
     "body-parser": "^1.17.2",
     "express": "^4.15.3",
-    "jsonwebtoken": "^8.2.0"
+    "api-nodelib": "antoine-aumjaud/api-nodelib#master"
   },
   "devDependencies": {
     "jasmine": "^2.6.0"
