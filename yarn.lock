@@ -10,8 +10,8 @@ accepts@~1.3.4:
     negotiator "0.6.1"
 
 api-nodelib@antoine-aumjaud/api-nodelib#master:
-  version "1.0.2"
-  resolved "https://codeload.github.com/antoine-aumjaud/api-nodelib/tar.gz/d54ba807e0f9f79de04a90b33a4e6b2ad5c8d424"
+  version "1.0.3"
+  resolved "https://codeload.github.com/antoine-aumjaud/api-nodelib/tar.gz/7c787d96ac2e7f6410fda466c333b6b4fbf81bc2"
   dependencies:
     jsonwebtoken "^8.2.0"
 
