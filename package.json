@@ -1,6 +1,6 @@
 {
   "name": "api-family",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "description": "API Family",
   "license": "MIT",
   "author": "Antoine Aumjaud",
@@ -14,9 +14,9 @@
   "main": "src/server.js",
   "repository": "https://github.com/antoine-aumjaud/api-family",
   "dependencies": {
+    "api-nodelib": "antoine-aumjaud/api-nodelib#master",
     "body-parser": "^1.17.2",
-    "express": "^4.15.3",
-    "api-nodelib": "antoine-aumjaud/api-nodelib#master"
+    "express": "^4.15.3"
   },
   "devDependencies": {
     "jasmine": "^2.6.0"
