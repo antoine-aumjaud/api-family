@@ -75,7 +75,9 @@ const addData = (type, message) => {
     //prepare message
     const firstname = message.firstname;
     delete message.firstname;
-    message.date = Date.now();
+    if(message.date == null) {
+        message.date = Date.now();
+    }
     //call service
     return dataService.add(firstname, type, message);
 }; 
