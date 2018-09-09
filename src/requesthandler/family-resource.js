@@ -14,25 +14,25 @@ module.exports = express.Router()
 })
 
 //Category API
-.post('/size', (req, res) => {
+.post('/sizes', (req, res) => {
     addData('size', req.body);
     res.status(200).end();
 })
-.post('/weight', (req, res) => {
+.post('/weights', (req, res) => {
     addData('weight', req.body);
     res.status(200).end();
 })  
-.post('/shoes-size', (req, res) => {
+.post('/shoes-sizes', (req, res) => {
     addData('shoes-size', req.body);
     res.status(200).end();
 })
-.get('/size', (req, res) => {
+.get('/sizes', (req, res) => {
     res.json(getDataByType('size', req.query.filter));
 })
-.get('/weight', (req, res) => {
+.get('/weights', (req, res) => {
     res.json(getDataByType('weight', req.query.filter));
 })
-.get('/shoes-size', (req, res) => {
+.get('/shoes-sizes', (req, res) => {
     res.json(getDataByType('shoes-size', req.query.filter));
 })
 
@@ -44,7 +44,7 @@ module.exports = express.Router()
         default: () => res.json(getData(req.query.filter))
     });
 })
-.get('/member/:member', (req, res) => {
+.get('/members/:member', (req, res) => {
     const data = getData(req.query.filter);
     const memberData = data[req.params.member];
     if(memberData) { 
@@ -53,7 +53,7 @@ module.exports = express.Router()
     }
     res.status(404).end();
 })
-.get('/member/:member/:type', (req, res) => {
+.get('/members/:member/:type', (req, res) => {
     const data = getData(req.query.filter);
     const memberData = data[req.params.member];
     if(memberData) {
