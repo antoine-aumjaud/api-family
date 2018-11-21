@@ -1,11 +1,11 @@
 {
   "name": "api-family",
-  "version": "1.1.4",
+  "version": "1.2.0",
   "description": "API Family",
   "license": "MIT",
   "author": "Antoine Aumjaud",
   "scripts": {
-    "build-config": "./build-config.sh",
+    "build-config": "build-config.sh",
     "debug": "npm run build-config && cd src && node --inspect server.js",
     "start": "npm run build-config && cd src && node server.js",
     "start-mon": "npm run build-config  && cd src && nodemon server.js",
