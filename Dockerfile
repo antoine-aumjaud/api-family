@@ -6,11 +6,9 @@ EXPOSE 9080
 
 WORKDIR /home/app
 COPY src .
+COPY node_modules node_modules
 COPY data data
 RUN mkdir logs
-
-COPY package*.json .
-RUN  /usr/local/bin/npm ci
 
 VOLUME ./conf
 VOLUME ./data
