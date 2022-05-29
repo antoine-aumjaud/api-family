@@ -10,7 +10,7 @@ COPY data data
 RUN mkdir logs
 
 COPY package.json .
-RUN  npm i
+RUN  /usr/local/bin/npm ci
 
 VOLUME ./conf
 VOLUME ./data
