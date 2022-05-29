@@ -39,4 +39,4 @@ jobs:
       uses: docker/build-push-action@v3.0.0
       with:
         context: .
-        tags: ${{ IMAGE_NAME }}:latest
+        tags: ${{ env.IMAGE_NAME }}:latest
