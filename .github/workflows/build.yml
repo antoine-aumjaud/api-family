@@ -36,3 +36,5 @@ jobs:
       with:
         tags: "latest"
         push: true
+        no-cache: true
+
