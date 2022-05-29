@@ -15,7 +15,8 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: 16
-        
+        cache: 'npm'
+
     - run: npm ci
     - run: npm run build-config
     - run: npm test
@@ -35,5 +36,4 @@ jobs:
       with:
         tags: "latest"
         push: true
-        no-cache: true
 
