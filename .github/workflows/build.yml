@@ -40,3 +40,4 @@ jobs:
       with:
         context: .
         tags: ${{ env.IMAGE_NAME }}:latest
+        push: true
