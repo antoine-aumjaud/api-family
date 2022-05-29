@@ -19,7 +19,6 @@ jobs:
     - run: npm ci
     - run: npm run build-config
     - run: npm test
-    - run: tree || ls -l
 
     # Login against a Docker
     # https://github.com/docker/login-action
