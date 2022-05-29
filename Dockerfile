@@ -1,4 +1,4 @@
-FROM node:16-alpine
+FROM node:14-alpine
 
 LABEL maintainer "Antoine Aumjaud <antoine_dev@aumjaud.fr>"
 
