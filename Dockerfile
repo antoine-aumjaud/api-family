@@ -9,7 +9,7 @@ COPY src .
 COPY data data
 RUN mkdir logs
 
-COPY package.json .
+COPY package*.json .
 RUN  /usr/local/bin/npm ci
 
 VOLUME ./conf
