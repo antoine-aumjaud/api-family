@@ -5,10 +5,12 @@ LABEL maintainer "Antoine Aumjaud <antoine_dev@aumjaud.fr>"
 EXPOSE 9080
 
 WORKDIR /home/app
-COPY node_modules node_modules
 COPY src .
 COPY data data
 RUN mkdir logs
+
+COPY package.json .
+RUN  npm i
 
 VOLUME ./conf
 VOLUME ./data
