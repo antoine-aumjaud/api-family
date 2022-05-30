@@ -54,4 +54,4 @@ jobs:
         url: https://api-synology-chatbot.aumjaud.fr/secure/send-message/continuous-integration
         method: POST
         customHeaders: '{"secure-key": "${{ secrets.API_CHATBOT_TOKEN }}", "content-type": "application/json"}'
-        data: '{ "message": "Build ${{ job.status && \"successful\" || \"failed\" }} of ${{ github.repository }}", "url": "${{ github.repositoryUrl }}" }'
+        data: '{ "message": "Build ${{ job.status && "successful" || "failed" }} of ${{ github.repository }}", "url": "${{ github.repositoryUrl }}" }'
