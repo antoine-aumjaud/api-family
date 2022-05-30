@@ -50,8 +50,11 @@ jobs:
     steps:
     - name: Webhook
       uses: fjogeleit/http-request-action@v1
+      env:
+        successful: "successful"
+        failed: "failed"
       with:
         url: https://api-synology-chatbot.aumjaud.fr/secure/send-message/continuous-integration
         method: POST
         customHeaders: '{"secure-key": "${{ secrets.API_CHATBOT_TOKEN }}", "content-type": "application/json"}'
-        data: '{"message": "${{ job.status && "Build successful" || "Build failed" }} of ${{ github.repository }}", "url": "${{ github.repositoryUrl }}"}'
+        data: '{"message": "Build ${{ job.status && env.successful || env.failed }} of ${{ github.repository }}", "url": "${{ github.repositoryUrl }}"}'
