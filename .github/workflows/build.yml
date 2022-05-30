@@ -46,10 +46,11 @@ jobs:
     if: always()
     runs-on: ubuntu-latest
 
+    steps:
     - name: Webhook
       uses: fjogeleit/http-request-action@v1
       with:
         url: https://api-synology-chatbot.aumjaud.fr/send-message/continuous-integration
         method: POST
-        customHeaders: {"Authorization": "Bearer ${{ secrets.API_CHATBOT_TOKEN }}", "Content-Type": "application/json"}
+        customHeaders: '{"Authorization": "Bearer ${{ secrets.API_CHATBOT_TOKEN }}", "Content-Type": "application/json"}'
         data: '{"message": "${{ github.job }} job in worflow ${{ github.workflow }} of ${{ github.repository }} has ${{ job.status }}", "url": "value_2"}'
