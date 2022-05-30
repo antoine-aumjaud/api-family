@@ -45,6 +45,7 @@ jobs:
   notification:
     if: always()
     runs-on: ubuntu-latest
+    needs: build
 
     steps:
     - name: Webhook
