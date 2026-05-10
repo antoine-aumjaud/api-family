@@ -7,37 +7,37 @@ on:
 env:
   DOCKERHUB_USER: antoineaumjaud
   IMAGE_NAME: antoineaumjaud/api-family
-  
+
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
     - name: Checkout sources
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
+
     - name: Setup Node.js
       uses: actions/setup-node@v3
       with:
-        node-version: 16
+        node-version: '16'
         cache: 'npm'
         
     - run: npm ci
     - run: npm run build-config
     - run: npm test
 
-    # Login against a Docker
     # https://github.com/docker/login-action
-    - name: Log into Docker registry 
-      uses: docker/login-action@v2.0.0
+    - name: Log into Docker registry
+      uses: docker/login-action@v3
       with:
-          username: ${{ env.DOCKERHUB_USER }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+        username: ${{ env.DOCKERHUB_USER }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
 
     # Build and push Docker image with Buildx (don't push on PR)
     # https://github.com/docker/build-push-action
     - name: Build and push Docker image
-      uses: docker/build-push-action@v3.0.0
+      uses: docker/build-push-action@v6
       with:
         context: .
-        tags: ${{ env.IMAGE_NAME }}:latest
         push: true
+        tags: ${{ env.IMAGE_NAME }}:latest
