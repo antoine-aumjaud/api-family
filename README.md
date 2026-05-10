@@ -1,4 +1,4 @@
 # api-family
 API - Family: information about the family
 
-[![Build Status](https://travis-ci.org/antoine-aumjaud/api-family.svg?branch=master)](https://travis-ci.org/antoine-aumjaud/api-family)
+[![Build Status](https://github.com/antoine-aumjaud/api-family/actions/workflows/build.yml/badge.svg)](https://github.com/antoine-aumjaud/api-family/actions/workflows/build.yml)
